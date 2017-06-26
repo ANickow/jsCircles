@@ -38,7 +38,7 @@
 
 		this.update = function(time){
 			var el = document.getElementById(html_id);
-			
+
 			//see if the circle is going outside the browser. if it is, reverse the velocity
 			if( this.info.cx > document.body.clientWidth-this.info.r || this.info.cx < this.info.r)
 			{
@@ -54,6 +54,13 @@
 
 			el.setAttribute("cx", this.info.cx);
 			el.setAttribute("cy", this.info.cy);
+		}
+
+		this.changeStyle = function(){
+			var el = document.getElementById(html_id);
+			var color = getRandomColor()
+			var colorStyle = "fill: " + color;
+			el.setAttribute("style", colorStyle);
 		}
 
 		//creates the SVG element and returns it
@@ -73,13 +80,26 @@
 	{
 		var counter = 0;  //counts the number of circles created
 		var circles = [ ]; //array that will hold all the circles created in the app
-
+		console.log(circles)
 		//a loop that updates the circle's position on the screen
 		this.loop = function(){
 			for(circle in circles)
 			{
 				circles[circle].update(1);
+				var counter = 1
+				
+			while (circle-counter>=0){
+					var xDistBetwCircles = Math.abs(circles[circle].info.cx - circles[circle-counter].info.cx)
+					var yDistBetwCircles = Math.abs(circles[circle].info.cy - circles[circle-counter].info.cy)
+					var radiusSum = circles[circle].info.r + circles[circle-counter].info.r
+					if (xDistBetwCircles < radiusSum && yDistBetwCircles < radiusSum){
+						circles[circle].changeStyle();
+						circles[circle-counter].changeStyle();
+					}
+					counter += 1;
+				}
 			}
+
 
 			//update the size of the svg element holding the circles each time the playground loops
 			document.getElementById('svg').setAttribute("width", document.body.clientWidth);
@@ -123,6 +143,15 @@
 			return time_pressed;
 		}
 
+	}
+	// Random color generator for collisions
+	function getRandomColor() {
+  		var letters = '0123456789ABCDEF';
+  		var color = '#';
+  		for (var i = 0; i < 6; i++) {
+    	color += letters[Math.floor(Math.random() * 16)];
+  		}	
+  		return color;
 	}
 	</script>
 
