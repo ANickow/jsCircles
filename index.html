@@ -7,8 +7,7 @@
 	<svg id="svg" xmlns="http://www.w3.org/2000/svg"></svg>
 
 	<script>
-	function Circle(cx, cy, html_id)
-	{
+	function Circle(cx, cy, html_id){
 		var html_id = html_id;
 		this.info = { cx: cx,  cy: cy };
 		
@@ -80,8 +79,12 @@
 			{
 				circles[circle].update(1);
 			}
-		}
 
+			//update the size of the svg element holding the circles each time the playground loops
+			document.getElementById('svg').setAttribute("width", document.body.clientWidth);
+			document.getElementById('svg').setAttribute("height", document.body.clientHeight);
+		}
+		
 		this.createNewCircle = function(x,y){
 			var new_circle = new Circle(x,y,counter++);
 			circles.push(new_circle);
