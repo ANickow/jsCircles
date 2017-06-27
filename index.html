@@ -55,6 +55,10 @@
 			el.setAttribute("cx", this.info.cx);
 			el.setAttribute("cy", this.info.cy);
 		}
+		this.changeVelocity = function(){
+			this.info.velocity.x = this.info.velocity.x * -1;
+			this.info.velocity.y = this.info.velocity.y * -1;
+		}
 
 		this.changeStyle = function(){
 			var el = document.getElementById(html_id);
@@ -95,6 +99,8 @@
 					if (xDistBetwCircles < radiusSum && yDistBetwCircles < radiusSum){
 						circles[circle].changeStyle();
 						circles[circle-counter].changeStyle();
+						circles[circle].changeVelocity();
+						circles[circle-counter].changeVelocity();
 					}
 					counter += 1;
 				}
